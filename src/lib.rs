@@ -32,3 +32,30 @@ pub mod symbols;
 
 pub use api::{resolve_datacollect_lib_path, DataCollectApi};
 pub use error::{CollectErrorFlags, DataCollectError, Result};
+
+/// 将 `Vec<u8>` 转换为 `[i8; N]` 定长数组。
+///
+/// 用于将采集到的终端信息填入 CTP API 要求的 `c_char` 定长字段
+/// （如 `TThostFtdcClientSystemInfoType`）。
+///
+/// - 若 `src.len() < N`，剩余位置填充 `0`
+/// - 若 `src.len() >= N`，截取前 `N` 字节
+///
+/// # 示例
+/// ```
+/// use datacollect_rs::vec_u8_to_i8_array;
+///
+/// let data = vec![0x48u8, 0x65, 0x6C, 0x6C, 0x6F];
+/// let arr: [i8; 8] = vec_u8_to_i8_array(&data);
+/// assert_eq!(&arr[..5], &[0x48, 0x65, 0x6C, 0x6C, 0x6F_i8]);
+/// assert_eq!(&arr[5..], &[0, 0, 0]);
+/// ```
+pub fn vec_u8_to_i8_array<const N: usize>(src: &[u8]) -> [i8; N] {
+    let mut dst = [0i8; N];
+    let copy_len = src.len().min(N);
+    // SAFETY: u8 和 i8 具有相同的大小和对齐，仅符号解释不同
+    unsafe {
+        std::ptr::copy_nonoverlapping(src.as_ptr() as *const i8, dst.as_mut_ptr(), copy_len);
+    }
+    dst
+}

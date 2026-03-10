@@ -1,6 +1,6 @@
 [package]
 name = "datacollect-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Pseudo <pseudocodes@gmail.com>"]
 description = "Rust bindings for CTP DataCollect (Terminal Info Collection) via libloading"
