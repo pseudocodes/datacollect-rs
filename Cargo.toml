@@ -1,0 +1,17 @@
+[package]
+name = "datacollect-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Pseudo <pseudocodes@gmail.com>"]
+description = "Rust bindings for CTP DataCollect (Terminal Info Collection) via libloading"
+license = "Apache-2.0"
+readme = "README.md"
+keywords = ["ctp", "datacollect", "quant"]
+categories = ["api-bindings", "finance"]
+
+[dependencies]
+libloading = "0.9"
+
+[[example]]
+name = "basic"
+path = "examples/basic.rs"
