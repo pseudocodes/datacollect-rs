@@ -9,6 +9,19 @@ readme = "README.md"
 keywords = ["ctp", "datacollect", "quant"]
 categories = ["api-bindings", "finance"]
 
+exclude = [
+    "*.log",
+    "*.tmp",
+    "scripts/*",
+    "*.con",
+    "*.framework",
+    "*.so",
+    "*.dll",
+    "*.lib",
+    "codegen/*.md",
+    "src/v1alpha1/generated/README.md",
+]
+
 [dependencies]
 libloading = "0.9"
 
